@@ -4,19 +4,11 @@ import {
   type CompressImageOptions,
 } from "../utils/compressImage";
 
-export type AcceptType = "images" | string; // 'images' | 'image/jpeg' | 'application/pdf' | etc.
+export type AcceptType = "images" | string;
 
-export interface useCompressUploadOptions extends CompressImageOptions {
-  /**
-   * Accepted file types.
-   * - 'images' → all image/*
-   * - specific MIME types: 'image/jpeg', 'application/pdf', etc.
-   */
+export interface UseCompressUploadOptions extends CompressImageOptions {
   accept?: AcceptType | AcceptType[];
-
-  /** Max file size in MB (validation) */
   maxSizeMB?: number;
-
   multiple?: boolean;
   open?: Ref<boolean>;
   onSuccess?: (file: File | File[]) => void;
@@ -25,7 +17,7 @@ export interface useCompressUploadOptions extends CompressImageOptions {
 }
 
 function normalizeAccept(accept?: AcceptType | AcceptType[]): string[] {
-  if (!accept) return ["images"]; // default to images only
+  if (!accept) return ["images"];
 
   const list = Array.isArray(accept) ? accept : [accept];
   const result: string[] = [];
@@ -43,7 +35,6 @@ function normalizeAccept(accept?: AcceptType | AcceptType[]): string[] {
 function isAccepted(file: File, acceptList: string[]): boolean {
   return acceptList.some((type) => {
     if (type.endsWith("/")) {
-      // e.g. "image/" matches image/jpeg, image/png, etc.
       return file.type.startsWith(type);
     }
     return file.type === type;
@@ -54,7 +45,7 @@ function isImage(file: File): boolean {
   return file.type.startsWith("image/");
 }
 
-export function useCompressUpload(options: useCompressUploadOptions = {}) {
+export function useCompressUpload(options: UseCompressUploadOptions = {}) {
   const {
     accept = ["images"],
     maxSizeMB = 10,
@@ -94,7 +85,6 @@ export function useCompressUpload(options: useCompressUploadOptions = {}) {
   }
 
   const processFile = async (original: File): Promise<File> => {
-    // Only compress real images
     if (isImage(original)) {
       return await compressImage(original, {
         maxSizeMB: 1.5,
@@ -104,8 +94,6 @@ export function useCompressUpload(options: useCompressUploadOptions = {}) {
         useWebWorker,
       });
     }
-
-    // For PDF and other allowed non-image files → return as-is
     return original;
   };
 
@@ -116,7 +104,6 @@ export function useCompressUpload(options: useCompressUploadOptions = {}) {
     const selectedFiles = Array.from(target.files);
     const maxBytes = maxSizeMB * 1024 * 1024;
 
-    // Validate size + type
     for (const f of selectedFiles) {
       if (f.size > maxBytes) {
         if (showToasts) console.warn(`File too large. Max ${maxSizeMB}MB`);

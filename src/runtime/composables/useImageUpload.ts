@@ -1,14 +1,12 @@
 import {
   useCompressUpload,
-  type useCompressUploadOptions,
+  type UseCompressUploadOptions,
 } from "./useCompressUpload";
 
 /**
- * Backward compatible alias for image-only uploads.
- * This is just a shortcut for:
- * useCompressUpload({ accept: ['images'], ... })
+ * Backward compatible image-only helper
  */
-export function useImageUpload(options: useCompressUploadOptions = {}) {
+export function useImageUpload(options: UseCompressUploadOptions = {}) {
   return useCompressUpload({
     accept: ["images"],
     ...options,

@@ -1,6 +1,6 @@
 {
   "name": "nuxt-image-compress",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Easy and performant image compression composable for Nuxt 3, powered by browser-image-compression with Web Worker support.",
   "keywords": [
     "nuxt",
