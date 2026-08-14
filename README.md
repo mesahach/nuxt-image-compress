@@ -1,12 +1,16 @@
 # nuxt-image-compress
 
-Easy and performant image compression for Nuxt 3 using [`browser-image-compression`](https://github.com/mesahach/nuxt-image-compress).
+Easy and performant file upload + image compression for Nuxt 3.
+
+Powered by [`browser-image-compression`](https://github.com/Donaldcwl/browser-image-compression).
 
 ## Features
 
-- Simple `useImageUpload` composable
+- `useFileUpload` – supports images + PDFs + custom MIME types
+- `useImageUpload` – simple alias for image-only uploads
 - Web Worker support (non-blocking)
-- Automatic preview generation
+- Automatic preview for images
+- Smart format handling
 - Auto-clear when dialog closes
 - Fully typed
 
@@ -20,8 +24,6 @@ npm install nuxt-image-compress
 
 ```ts
 <script setup lang="ts">
-import { useImageUpload } from "nuxt-image-compress";
-
 const { file, files, preview, previews, isCompressing, handleImageSelect, clearImage } = useImageUpload({
   maxSizeMB: 10,
   multiple: false,
@@ -245,3 +247,94 @@ const {
   },
 });
 ```
+
+Version 2 Updates:
+
+- Added `useFileUpload` composable for general file uploads (images, PDFs, etc.)
+- Added `accept` option to filter file types
+- Added `multiple` option for multiple file selection
+- Added `open` option for auto-clearing when dialog closes
+- Added `onSuccess` and `onError` callbacks
+- Added `showToasts` option for toast notifications
+- Added `maxWidthOrHeight` option for maximum width or height
+- Added `initialQuality` option for initial compression quality
+- Added `fileType` option for output format
+- Added `useWebWorker` option for Web Worker support
+- Added `clearImage` method for clearing selected files
+
+Examples:
+
+```ts
+<script setup lang="ts">
+const { preview, isCompressing, handleFileSelect, file } = useFileUpload({
+  accept: ["images"], // for images you can remove this part
+  onSuccess: (compressedFile) => {
+    console.log(compressedFile);
+  },
+});
+</script>
+
+
+const { file, preview, handleFileSelect } = useFileUpload({
+  accept: ["images", "application/pdf"],
+  maxSizeMB: 10,
+  onSuccess: (f) => {
+    form.setFieldValue("proof", f);
+  },
+});
+
+// Images + PDFs
+const { file, preview, handleFileSelect } = useFileUpload({
+  accept: ["images", "application/pdf"],
+  maxSizeMB: 10,
+  onSuccess: (f) => {
+    form.setFieldValue("proof", f);
+  },
+});
+
+<template>
+  <input type="file" accept="image/*, application/pdf" @change="handleFileSelect" />
+  <div v-if="isCompressing">Compressing...</div>
+  <img v-if="preview" :src="preview" class="max-w-xs rounded" />
+</template>
+
+// Using the old useImageUpload (still works):
+
+<template>
+  <input type="file" accept="image/*" @change="handleFileSelect" />
+  <div v-if="isCompressing">Compressing...</div>
+  <img v-if="preview" :src="preview" class="max-w-xs rounded" />
+</template>
+
+const { preview, handleImageSelect } = useImageUpload({
+  onSuccess: (file) => {
+    form.setFieldValue("image", file);
+  },
+});
+```
+
+Accept Options:
+
+| Value                               | Description                |
+| ----------------------------------- | -------------------------- |
+| """images"""                        | All image types (image/\*) |
+| """image/jpeg"""                    | Only JPEG                  |
+| """image/png"""                     | Only PNG                   |
+| """application/pdf"""               | PDF                        |
+| "[""images"", ""application/pdf""]" | Images + PDFs              |
+
+Options:
+
+| Option           | Type         | Default                 | Description                                     |
+| ---------------- | ------------ | ----------------------- | ----------------------------------------------- |
+| accept           | string       | string[],"[""images""]" | Allowed file types                              |
+| maxSizeMB        | number       | 10                      | Max file size before processing                 |
+| maxWidthOrHeight | number       | 1600                    | Max dimension after compression                 |
+| initialQuality   | number       | 0.8                     | Compression quality (0–1)                       |
+| fileType         | string       | -                       | Force output format (image/jpeg, image/webp...) |
+| multiple         | boolean      | false                   | Allow multiple files                            |
+| open             | Ref<boolean> | -                       | Auto clear when dialog closes                   |
+| onSuccess        | Function     | -                       | Called after successful processing              |
+| onError          | Function     | -                       | Called on error                                 |
+| showToasts       | boolean      | true                    | Show toast notifications                        |
+| useWebWorker     | boolean      | true                    | Use Web Worker for compression                  |
