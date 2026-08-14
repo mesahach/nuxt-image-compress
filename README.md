@@ -338,3 +338,27 @@ Options:
 | onError          | Function     | -                       | Called on error                                 |
 | showToasts       | boolean      | true                    | Show toast notifications                        |
 | useWebWorker     | boolean      | true                    | Use Web Worker for compression                  |
+
+Difference between useCompressUpload and useImageUpload
+
+### `useCompressUpload` vs `useImageUpload`
+
+| Feature                   | `useCompressUpload`                        | `useImageUpload`                       |
+| ------------------------- | ------------------------------------------ | -------------------------------------- |
+| Purpose                   | General file upload (images + other types) | Image-only shortcut                    |
+| Accepts PDFs              | Yes                                        | No                                     |
+| Accepts custom MIME types | Yes                                        | No                                     |
+| Compresses images         | Yes                                        | Yes                                    |
+| Recommended for           | Receipts, documents, mixed uploads         | Profile pictures, icons, simple images |
+
+**Examples:**
+
+```ts
+// For images + PDFs (recommended for deposit proofs)
+const { file, preview, handleFileSelect } = useCompressUpload({
+  accept: ["images", "application/pdf"],
+});
+
+// For images only
+const { file, preview, handleFileSelect } = useImageUpload();
+```
