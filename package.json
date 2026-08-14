@@ -1,0 +1,52 @@
+{
+  "name": "nuxt-image-compress",
+  "version": "1.0.0",
+  "description": "Easy and performant image compression composable for Nuxt 3, powered by browser-image-compression with Web Worker support.",
+  "keywords": [
+    "nuxt",
+    "nuxt3",
+    "image",
+    "compression",
+    "compress",
+    "upload",
+    "browser-image-compression",
+    "composable",
+    "web-worker"
+  ],
+  "homepage": "https://github.com/mesahach/nuxt-image-compress#readme",
+  "bugs": {
+    "url": "https://github.com/mesahach/nuxt-image-compress/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mesahach/nuxt-image-compress.git"
+  },
+  "license": "MIT",
+  "author": "Meshach Friday",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/types.d.mts",
+      "import": "./dist/module.mjs"
+    }
+  },
+  "main": "./dist/module.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "prepack": "nuxt-module-build build",
+    "dev": "nuxi dev playground",
+    "dev:prepare": "nuxt-module-build build --stub && nuxt-module-build prepare",
+    "release": "npm run prepack && npm publish"
+  },
+  "dependencies": {
+    "@nuxt/kit": "^4.5.2",
+    "browser-image-compression": "^2.0.2"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^1.0.3",
+    "nuxt": "^4.5.2",
+    "typescript": "^5.9.3"
+  }
+}
