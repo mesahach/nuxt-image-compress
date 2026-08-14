@@ -24,7 +24,7 @@ npm install nuxt-image-compress
 
 ```ts
 <script setup lang="ts">
-const { file, files, preview, previews, isCompressing, handleImageSelect, clearImage } = useImageUpload({
+const { file, files, preview, previews, isCompressing, handleFileSelect, clearImage } = useImageUpload({
   maxSizeMB: 10,
   multiple: false,
   maxWidthOrHeight: 1600,
@@ -43,7 +43,7 @@ const { file, files, preview, previews, isCompressing, handleImageSelect, clearI
 
 <template>
   <div>
-    <input type="file" accept="image/*" @change="handleImageSelect" />
+    <input type="file" accept="image/*" @change="handleFileSelect" />
     <button @click="clearImage">Clear</button>
 
     <div v-if="isCompressing">Compressing...</div>
@@ -67,7 +67,7 @@ const { file, files, preview, previews, isCompressing, handleImageSelect, clearI
 <script setup lang="ts">
 import { useImageUpload } from "nuxt-image-compress";
 
-const { file, files, preview, previews, isCompressing, handleImageSelect, clearImage } = useImageUpload({
+const { file, files, preview, previews, isCompressing, handleFileSelect, clearImage } = useImageUpload({
   maxSizeMB: 10,
   multiple: false,
   maxWidthOrHeight: 1600,
@@ -86,7 +86,7 @@ const { file, files, preview, previews, isCompressing, handleImageSelect, clearI
 
 <template>
   <div>
-    <input type="file" accept="image/*" @change="handleImageSelect" />
+    <input type="file" accept="image/*" @change="handleFileSelect" />
     <button @click="clearImage">Clear</button>
 
     <div v-if="isCompressing">Compressing...</div>
@@ -118,7 +118,7 @@ More example:
 
 ```ts
 <script setup lang="ts">
-const { preview, isCompressing, handleImageSelect, file } = useImageUpload({
+const { preview, isCompressing, handleFileSelect, file } = useImageUpload({
   onSuccess: (compressedFile) => {
     // Example: form.setFieldValue("image", compressedFile)
     console.log(compressedFile);
@@ -128,7 +128,7 @@ const { preview, isCompressing, handleImageSelect, file } = useImageUpload({
 
 <template>
   <div>
-    <input type="file" accept="image/*" @change="handleImageSelect" />
+    <input type="file" accept="image/*" @change="handleFileSelect" />
 
     <div v-if="isCompressing">Compressing...</div>
 
@@ -145,7 +145,7 @@ import { useImageUpload } from "nuxt-image-compress";
 
 const dialogOpen = ref(false);
 
-const { file, preview, isCompressing, handleImageSelect, clearImage } = useImageUpload({
+const { file, preview, isCompressing, handleFileSelect, clearImage } = useImageUpload({
   open: dialogOpen,
   onSuccess: (compressedFile) => {
     console.log(compressedFile);
@@ -161,7 +161,7 @@ const { file, preview, isCompressing, handleImageSelect, clearImage } = useImage
       <div class="bg-white p-6 rounded shadow-lg">
         <h2 class="text-lg font-bold mb-4">Upload Image</h2>
 
-        <input type="file" accept="image/*" @change="handleImageSelect" />
+        <input type="file" accept="image/*" @change="handleFileSelect" />
 
         <div v-if="isCompressing" class="mt-2">Compressing...</div>
 
@@ -234,7 +234,7 @@ const {
   preview,
   previews,
   isCompressing,
-  handleImageSelect,
+  handleFileSelect,
   clearImage,
 } = useImageUpload({
   onSuccess: (result) => {
@@ -306,7 +306,7 @@ const { file, preview, handleFileSelect } = useFileUpload({
   <img v-if="preview" :src="preview" class="max-w-xs rounded" />
 </template>
 
-const { preview, handleImageSelect } = useImageUpload({
+const { preview, handleFileSelect } = useImageUpload({
   onSuccess: (file) => {
     form.setFieldValue("image", file);
   },

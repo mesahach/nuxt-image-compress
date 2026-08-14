@@ -90,7 +90,7 @@ const getFileUrl = (f: File) => URL.createObjectURL(f);
 
 <!-- 
 <script setup lang="ts">
-const { preview, isCompressing, handleImageSelect, file } = useImageUpload({
+const { preview, isCompressing, handleFileSelect, file } = useImageUpload({
   maxSizeMB: 10,
   multiple: false,
   maxWidthOrHeight: 1600,
@@ -117,7 +117,7 @@ const { preview, isCompressing, handleImageSelect, file } = useImageUpload({
       type="file"
       accept="image/*"
       class="block w-full text-sm"
-      @change="handleImageSelect"
+      @change="handleFileSelect"
     />
 
     <div v-if="isCompressing" class="text-blue-600 font-medium">
