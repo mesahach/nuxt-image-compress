@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { preview, isCompressing, handleFileSelect, file } = useFileUpload({
+const { preview, isCompressing, handleFileSelect, file } = useCompressUpload({
   accept: ["images", "application/pdf"],
   maxSizeMB: 10,
   onSuccess: (result) => {

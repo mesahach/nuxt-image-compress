@@ -6,7 +6,7 @@ Powered by [`browser-image-compression`](https://github.com/Donaldcwl/browser-im
 
 ## Features
 
-- `useFileUpload` – supports images + PDFs + custom MIME types
+- `useCompressUpload` – supports images + PDFs + custom MIME types
 - `useImageUpload` – simple alias for image-only uploads
 - Web Worker support (non-blocking)
 - Automatic preview for images
@@ -250,7 +250,7 @@ const {
 
 Version 2 Updates:
 
-- Added `useFileUpload` composable for general file uploads (images, PDFs, etc.)
+- Added `useCompressUpload` composable for general file uploads (images, PDFs, etc.)
 - Added `accept` option to filter file types
 - Added `multiple` option for multiple file selection
 - Added `open` option for auto-clearing when dialog closes
@@ -266,7 +266,7 @@ Examples:
 
 ```ts
 <script setup lang="ts">
-const { preview, isCompressing, handleFileSelect, file } = useFileUpload({
+const { preview, isCompressing, handleFileSelect, file } = useCompressUpload({
   accept: ["images"], // for images you can remove this part
   onSuccess: (compressedFile) => {
     console.log(compressedFile);
@@ -275,7 +275,7 @@ const { preview, isCompressing, handleFileSelect, file } = useFileUpload({
 </script>
 
 
-const { file, preview, handleFileSelect } = useFileUpload({
+const { file, preview, handleFileSelect } = useCompressUpload({
   accept: ["images", "application/pdf"],
   maxSizeMB: 10,
   onSuccess: (f) => {
@@ -284,7 +284,7 @@ const { file, preview, handleFileSelect } = useFileUpload({
 });
 
 // Images + PDFs
-const { file, preview, handleFileSelect } = useFileUpload({
+const { file, preview, handleFileSelect } = useCompressUpload({
   accept: ["images", "application/pdf"],
   maxSizeMB: 10,
   onSuccess: (f) => {

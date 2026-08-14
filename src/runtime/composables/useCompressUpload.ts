@@ -6,7 +6,7 @@ import {
 
 export type AcceptType = "images" | string; // 'images' | 'image/jpeg' | 'application/pdf' | etc.
 
-export interface UseFileUploadOptions extends CompressImageOptions {
+export interface useCompressUploadOptions extends CompressImageOptions {
   /**
    * Accepted file types.
    * - 'images' → all image/*
@@ -54,7 +54,7 @@ function isImage(file: File): boolean {
   return file.type.startsWith("image/");
 }
 
-export function useFileUpload(options: UseFileUploadOptions = {}) {
+export function useCompressUpload(options: useCompressUploadOptions = {}) {
   const {
     accept = ["images"],
     maxSizeMB = 10,
